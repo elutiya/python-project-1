@@ -11,14 +11,9 @@ from colorama import Fore, Back, Style, init
 init(autoreset=True)
 import os
 import time
-
+#clear screen
 def clear_screen():
-    # Windows
-    if os.name == 'nt':
-        os.system('cls')
-    # macOS/Linux
-    else:
-        os.system('clear')
+    os.system('cls')
 
 #loding_animation
 def loading_animation(duration=1.5):
@@ -67,7 +62,7 @@ def print_menu():
     
     # Footer
     print(FOOTER_BG + " " * 40 + Style.RESET_ALL)
-
+# add new task
 def add_task(tasks):
     print( " Type " + HEADER_BG+ "'done'" + END+ " when you are finished.\n" )
     
@@ -79,13 +74,14 @@ def add_task(tasks):
         if task_name in tasks:
             print(RED + " Task already exists! Try another one.\n" + END)
             continue
-        
+        #priority choose
         while True:
             priority = input(f"Choose priority for '{task_name}' [{CYAN}low{END}, {CYAN}medium{END}, {CYAN}high{END}]: ").strip().lower()
             if priority not in ('low', 'medium', 'high'):
                 print(RED + "Invalid priority. Please enter again.\n" + END)
                 continue
             break
+        #due date/time
         while True:
             due_date = input(f"Enter due date"+CYAN+"(YYYY-MM-DD)"+END+ "or press Enter to skip: ").strip()
             if due_date == "":
@@ -146,7 +142,7 @@ def edit_task(tasks):
         print(GREEN + f"Editing '{task_name}'")
 
         # Edit name
-        new_name = input("New task name (press Enter to skip): ").strip().lower()
+        new_name = input(" Edit task name (press Enter to skip): ").strip().lower()
         if new_name:
             tasks[new_name] = tasks.pop(task_name)
             task_name = new_name
@@ -156,17 +152,17 @@ def edit_task(tasks):
         f"Enter due time "+CYAN+"(HH:MM) "+END+"or press Enter to skip: "
 
         # Edit priority
-        new_priority = input("New priority [{CYAN}low{END}, {CYAN}medium{END}, {CYAN}high{END}]:(Enter to skip): ").strip().lower()
+        new_priority = input("Edit priority [{CYAN}low{END}, {CYAN}medium{END}, {CYAN}high{END}]:(Enter to skip): ").strip().lower()
         if new_priority in ("low", "medium", "high"):
             task["priority"] = new_priority
 
         # Edit due date
-        new_date = input("New due date "+CYAN+"(YYYY-MM-DD)"+END+ "or Enter to skip: ").strip()
+        new_date = input("Edit due date "+CYAN+"(YYYY-MM-DD)"+END+ "or Enter to skip: ").strip()
         if new_date:
             task["due_date"] = new_date
 
         # Edit due time
-        new_time = input("New due time "+CYAN+"(HH:MM) "+END+"or Enter to skip: ").strip()
+        new_time = input("Edit due time "+CYAN+"(HH:MM) "+END+"or Enter to skip: ").strip()
         if new_time:
             task["due_time"] = new_time
 
