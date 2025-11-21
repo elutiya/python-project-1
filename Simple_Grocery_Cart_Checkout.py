@@ -6,6 +6,37 @@
 # Keeps adding to the cart until the user types "checkout".
 # Displays a final bill: each item, quantity, subtotal, and total.
 # Skills practiced: dictionaries, loops, input(), math operations, formatting, error handling
+from colorama import Fore, Back, Style, init
+init(autoreset=True)
+import os
+import time
+#clear screen
+def clear_screen():
+    os.system('cls')
+
+#loding_animation
+def loading_animation(duration=1.5):
+    """Displays a simple loading animation."""
+    print("Processing", end="")
+    for _ in range(int(duration / 0.3)):
+        for dot in range(1, 4):
+            print("." * dot, end="\r")
+            time.sleep(0.3)
+            print(" " * 15, end="\r")  # clear line
+    print("Done!       ")
+
+
+
+# Colors
+CYAN = Fore.CYAN + Style.BRIGHT 
+YELLOW = Fore.YELLOW + Style.BRIGHT
+RED = Fore.RED + Style.BRIGHT
+GREEN = Fore.GREEN + Style.BRIGHT
+BLUE = Fore.BLUE + Style.BRIGHT
+END = Style.RESET_ALL 
+HEADER_BG = "\033[48;2;1;140;136m" + Fore.WHITE + Style.BRIGHT
+OPTION_BG = "\033[48;2;147;184;183m" + Fore.BLACK + Style.NORMAL
+FOOTER_BG = "\033[48;2;1;140;136m" + Fore.WHITE + Style.BRIGHT
 
 total = 0
 #groceries_list
