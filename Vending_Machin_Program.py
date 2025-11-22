@@ -47,11 +47,12 @@ while True:
     selected_items = {} 
 
     print(GREEN + BOLD + "✨=== Welcome to the Arat Kilo Vending Machine ===✨" + RESET)
-    print(BG_BLUE + BOLD + "📋 Here's our menu    price" + RESET)
+    print(BG_BLUE + " " * 33)
+    print(BG_BLUE + BOLD + f"📋 {'Menu':<17}   {' price':10}" + RESET)
+    print(BG_BLUE + " " * 33)
 
     for number, (item, price) in menu.items():
-        print(BG_YELLOW + BOLD + f"{number}. {item:<15}" + RESET + " - " +
-              BG_YELLOW + BOLD + f"${price:.2f}" + RESET)
+        print(BG_YELLOW + BOLD + f"{number}. {item:<17}" " - " f"${price:<8.2f}"+ RESET )
 
 
     while True:
