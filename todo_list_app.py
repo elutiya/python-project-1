@@ -103,12 +103,13 @@ def add_task(tasks):
 def print_tasks(tasks):
     # Header
     print(HEADER_BG + " " * 40)
-    print(HEADER_BG + "        TASK MANAGER MENU               ")
+    print(HEADER_BG + f"{'TASK MANAGER MENU':^40}")
     print(HEADER_BG + " " * 40 + Style.RESET_ALL)
     if not tasks:
         print(OPTION_BG +RED + "No tasks available.                     ")
         return
     # print(CYAN + "\n======= YOUR TASKS =======")
+    print(OPTION_BG + f" {'Task Name':<15}  {'Priority':<8}  {'Due Date':<15} {'Due Time':<15} ")
     for i, (name, value) in enumerate(tasks.items(), start=1):
             print(OPTION_BG + f" {i}. {name:<15}  {value['priority']:<8}  {value['due_date']:<15} {value['due_time']:<15} ") 
 def edit_task(tasks):
