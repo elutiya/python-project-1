@@ -1,0 +1,51 @@
+
+What is the capital of France?|Paris|Lyon;Marseille;Paris;Nice|Known as the City of Light.
+What is the capital of the United States?|Washington, D.C.|New York;Washington, D.C.;Los Angeles;Boston|Located on the Potomac River.
+What is the capital of the United Kingdom?|London|Manchester;Edinburgh;London;Birmingham|Famous for the Thames and Big Ben.
+What is the capital of Canada?|Ottawa|Toronto;Vancouver;Ottawa;Montreal|Located in Ontario province.
+What is the capital of Australia?|Canberra|Sydney;Melbourne;Canberra;Perth|Designed specifically as the capital.
+What is the capital of Germany?|Berlin|Munich;Hamburg;Berlin;Frankfurt|City with the Brandenburg Gate.
+What is the capital of Italy?|Rome|Milan;Venice;Rome;Naples|Home to the Colosseum and Vatican City.
+What is the capital of Spain?|Madrid|Barcelona;Seville;Madrid;Valencia|Located in the center of Spain.
+What is the capital of Japan?|Tokyo|Kyoto;Osaka;Tokyo;Sapporo|A huge metropolis and economic center.
+What is the capital of China?|Beijing|Shanghai;Beijing;Guangzhou;Shenzhen|Site of the Forbidden City.
+What is the capital of Russia?|Moscow|Saint Petersburg;Moscow;Kazan;Sochi|Known for the Kremlin and Red Square.
+What is the capital of India?|New Delhi|Mumbai;New Delhi;Kolkata;Chennai|Part of the National Capital Territory.
+What is the capital of Brazil?|Brasilia|Rio de Janeiro;Brasilia;Sao Paulo;Salvador|Planned city inaugurated in 1960.
+What is the capital of Mexico?|Mexico City|Guadalajara;Monterrey;Mexico City;Puebla|One of the largest cities in the world.
+What is the capital of Argentina?|Buenos Aires|Cordoba;Rosario;Buenos Aires;Mendoza|Famous for tango and port.
+What is the (executive) capital of South Africa?|Pretoria|Cape Town;Johannesburg;Pretoria;Durban|One of three national capitals; seat of government.
+What is the capital of Egypt?|Cairo|Alexandria;Giza;Cairo;Luxor|Near the Nile River delta.
+What is the capital of Turkey?|Ankara|Istanbul;Ankara;Izmir;Antalya|Located in the central part of the country.
+What is the capital of Saudi Arabia?|Riyadh|Mecca;Jeddah;Riyadh;Medina|Largest city on the Arabian Peninsula.
+What is the capital of Iran?|Tehran|Isfahan;Mashhad;Tehran;Tabriz|Located at the foot of the Alborz mountains.
+What is the capital of the Netherlands?|Amsterdam|Rotterdam;The Hague;Amsterdam;Utrecht|Famous for canals and museums.
+What is the capital of Belgium?|Brussels|Antwerp;Bruges;Brussels;Ghent|Seat of the EU institutions.
+What is the capital of Switzerland?|Bern|Zurich;Geneva;Bern;Basel|A federal city with medieval center.
+What is the capital of Austria?|Vienna|Salzburg;Graz;Vienna;Innsbruck|Known for classical music and palaces.
+What is the capital of Poland?|Warsaw|Krakow;Gdansk;Warsaw;Wroclaw|Rebuilt after WWII, on the Vistula River.
+What is the capital of Greece?|Athens|Thessaloniki;Patras;Athens;Heraklion|Famous for the Acropolis.
+What is the capital of Portugal?|Lisbon|Porto;Faro;Lisbon;Coimbra|Located on the Tagus River estuary.
+What is the capital of Ireland?|Dublin|Cork;Limerick;Dublin;Galway|Known for its literary history and pubs.
+What is the capital of New Zealand?|Wellington|Auckland;Christchurch;Wellington;Hamilton|Located at the southern tip of North Island.
+What is the capital of Indonesia?|Jakarta|Bandung;Surabaya;Jakarta;Yogyakarta|Largest city and economic center.
+What is the capital of Thailand?|Bangkok|Phuket;Chiang Mai;Bangkok;Pattaya|Known locally as Krung Thep.
+What is the capital of Vietnam?|Hanoi|Ho Chi Minh City;Da Nang;Hanoi;Hue|Located in the north of the country.
+What is the capital of the Philippines?|Manila|Cebu;Davao;Manila;Baguio|On the island of Luzon.
+What is the capital of South Korea?|Seoul|Busan;Incheon;Seoul;Daegu|A major tech and cultural hub.
+What is the capital of Malaysia?|Kuala Lumpur|George Town;Kuala Lumpur;Johor Bahru;Malacca|Famous for its twin towers.
+What is the capital of Singapore?|Singapore|Singapore;Kuala Lumpur;Bandar Seri Begawan;Jakarta|City-state; capital is the country name.
+What is the capital of the United Arab Emirates?|Abu Dhabi|Dubai;Abu Dhabi;Sharjah;Ajman|Seat of government and large oil reserves.
+What is the capital of Kenya?|Nairobi|Mombasa;Kisumu;Nairobi;Nakuru|Known for its national park near the city.
+What is the capital of Nigeria?|Abuja|Lagos;Kano;Abuja;Ibadan|Planned city moved from Lagos.
+What is the capital of Morocco?|Rabat|Casablanca;Fez;Rabat;Marrakesh|Located on the Atlantic coast.
+What is the capital of Algeria?|Algiers|Oran;Constantine;Algiers;Annaba|Built on hills facing the Mediterranean.
+What is the capital of Chile?|Santiago|Valparaiso;Concepcion;Santiago;La Serena|Located in a valley surrounded by Andes.
+What is the capital of Colombia?|Bogota|Medellin;Cali;Bogota;Cartagena|High-altitude city in the Andes.
+What is the capital of Peru?|Lima|Cusco;Arequipa;Lima;Trujillo|Coastal capital facing the Pacific.
+What is the capital of Venezuela?|Caracas|Maracaibo;Valencia;Caracas;Barquisimeto|Nestled in a mountain valley.
+What is the capital of the Czech Republic?|Prague|Brno;Ostrava;Prague;Pilsen|Known for its historic Old Town.
+What is the capital of Hungary?|Budapest|Szeged;Debrecen;Budapest;Pecs|City split by the Danube into Buda and Pest.
+What is the capital of Romania?|Bucharest|Cluj-Napoca;Timisoara;Bucharest;Iasi|Largest city in Romania.
+What is the capital of Ukraine?|Kyiv|Kharkiv;Dnipro;Kyiv;Lviv|Historic city on the Dnieper River.
+What is the capital of Sweden?|Stockholm|Gothenburg;Malmö;Stockholm;Uppsala|Built on multiple islands.
