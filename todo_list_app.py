@@ -8,9 +8,11 @@
 
 
 from colorama import Fore, Back, Style, init
+from datetime import datetime
 init(autoreset=True)
 import os
 import time
+
 #clear screen
 def clear_screen():
     os.system('cls')
@@ -23,10 +25,31 @@ def loading_animation(duration=1.5):
         for dot in range(1, 4):
             print("." * dot, end="\r")
             time.sleep(0.3)
-            print(" " * 15, end="\r")  # clear line
+            print(" " * 15, end="\r")  
     print("Done!       ")
 
+def get_valid_date(prompt):
+    while True:
+        user_input = input(prompt).strip()
+        if user_input == "":
+            return "-"   
+        try:
+            
+            datetime.strptime(user_input, "%Y-%m-%d")
+            return user_input  
+        except ValueError:
+            print("❌ Invalid date format! Please use YYYY-MM-DD.")
 
+def get_valid_time(prompt):
+    while True:
+        user_input = input(prompt).strip()
+        if user_input == "":
+            return "-"   
+        try:
+            datetime.strptime(user_input, "%H:%M")
+            return user_input
+        except ValueError:
+            print("❌ Invalid time format! Please use HH:MM.")
 
 # Colors
 CYAN = Fore.CYAN + Style.BRIGHT 
@@ -69,7 +92,7 @@ def add_task(tasks):
     while True:
         task_name = input(OPTION_BG + " Enter your task: " + END).strip().lower()
         if task_name == "done":
-            print(HEADER_BG + " Finished adding tasks!" + END)
+            print(HEADER_BG + " ✅Finished adding tasks!" + END)
             break
         if task_name in tasks:
             print(RED + " Task already exists! Try another one.\n" + END)
@@ -78,15 +101,15 @@ def add_task(tasks):
         while True:
             priority = input(f"Choose priority for '{task_name}' [{CYAN}low{END}, {CYAN}medium{END}, {CYAN}high{END}]: ").strip().lower()
             if priority not in ('low', 'medium', 'high'):
-                print(RED + "Invalid priority. Please enter again.\n" + END)
+                print(RED + "❌Invalid priority. Please enter again.\n" + END)
                 continue
             break
         #due date/time
         while True:
-            due_date = input(f"Enter due date"+CYAN+"(YYYY-MM-DD)"+END+ "or press Enter to skip: ").strip()
+            due_date = get_valid_date(f"Enter due date"+CYAN+"(YYYY-MM-DD)"+END+ "or press Enter to skip: ").strip()
             if due_date == "":
                 due_date = "-"
-            due_time = input(f"Enter due time "+CYAN+"(HH:MM) "+END+"or press Enter to skip: ").strip()
+            due_time = get_valid_time(f"Enter due time "+CYAN+"(HH:MM) "+END+"or press Enter to skip: ").strip()
             if due_time == "":
                  due_time = "-"
             break
@@ -102,16 +125,16 @@ def add_task(tasks):
 
 def print_tasks(tasks):
     # Header
-    print(HEADER_BG + " " * 40)
-    print(HEADER_BG + f"{'TASK MANAGER MENU':^40}")
-    print(HEADER_BG + " " * 40 + Style.RESET_ALL)
+    print(HEADER_BG + " " * 66)
+    print(HEADER_BG + f"{'TASK MANAGER MENU':^66}")
+    print(HEADER_BG + " " * 66 + Style.RESET_ALL)
     if not tasks:
-        print(OPTION_BG +RED + "No tasks available.                     ")
+        print(OPTION_BG +RED + f"{'No tasks available.':^66}")
         return
     # print(CYAN + "\n======= YOUR TASKS =======")
-    print(OPTION_BG + f" {'Task Name':<15}  {'Priority':<8}  {'Due Date':<15} {'Due Time':<15} ")
+    print(OPTION_BG + f"{'No':>3} {'Task Name':<20}  {'Priority':^12}  {'Due Date':^14} {'Due Time':^10} ")
     for i, (name, value) in enumerate(tasks.items(), start=1):
-            print(OPTION_BG + f" {i}. {name:<15}  {value['priority']:<8}  {value['due_date']:<15} {value['due_time']:<15} ") 
+            print(OPTION_BG + f" {i}. {name:<20}  {value['priority']:^12}  {value['due_date']:^14} {value['due_time']:^10} ") 
 def edit_task(tasks):
     if not tasks:
         print(RED + "No tasks available.")
@@ -215,7 +238,7 @@ def mark_task_completed(tasks):
             tasks[mark_task]["completed"] = True
             print(GREEN+ f"'{mark_task}' marked as completed!")
         else:
-            print("task not found!")
+            print("❌task not found!")
 
 def show_summary(tasks):
     print(CYAN+"summary:")
@@ -242,7 +265,7 @@ def main():
                 else:
                     x = False
             except ValueError:
-                print(RED+ "Invalid input, please enter a number.")
+                print(RED+ "❌Invalid input, please enter a number.")
                 continue
             
         if command == 1:
@@ -275,7 +298,7 @@ def main():
             print(BLUE+"Goodbye!")
             break
         else:
-            print(RED+ "Invalid input, try again.")
+            print(RED+ "❌Invalid input, try again.")
 
         option = input(YELLOW+ "\nPress '1' to return to menu \npress '2' to exit: ")
         loading_animation(0.5)
