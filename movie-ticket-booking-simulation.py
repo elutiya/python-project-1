@@ -145,11 +145,11 @@ def movie_booking_system():
 
     try:
         while True:
-            print(BG_YELLOW+ "\n🎬 Available Movies\n") 
+            print(BG_YELLOW+ BOLD+ "\n🎬 Available Movies\n") 
             print(f"{'No.':<5}{'Title':<25}{'Showtime':<15}{'Price ($)':<10}")
-            print("-" * 60)
+            print("-" * 55)
             for i, (title, details) in enumerate(movies.items(), start=1):
-                print(BG_YELLOW+ f"{i:<5}{title:<25}{details['showtime']:<15}{details['price']:<10}"+ RESET)
+                print(BG_YELLOW+ CYAN+ BOLD+  f"{i:<5}{title:<25}{details['showtime']:<15}{details['price']:<10}"+ RESET)
 
             choice = _int_input(GREEN+ BOLD+ "\nEnter the number of the movie you want to book: ", 1, len(movies))
             selected_movie = list(movies.keys())[choice - 1]

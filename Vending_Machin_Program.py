@@ -1,7 +1,7 @@
 import datetime
 import time
 
-# 🎨 Colors & Styles
+
 RED = "\033[91m"
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
@@ -31,7 +31,7 @@ def loading_animation(duration=1.5):
     print(GREEN + "Done!" + RESET)
 
 
-# 🛒 Menu
+
 menu = {
     1: ["🍟 Chips", 10],
     2: ["🥤 Soda", 25],
@@ -43,7 +43,7 @@ menu = {
     8: ["🍬 Gum", 1]
 }
 
-transaction_counter = 1  # 🔢 Keeps track of transactions
+transaction_counter = 1  
 
 while True:
     selected_items = {}
@@ -96,11 +96,11 @@ while True:
 
             action = input("Enter 1 or 2: ").strip()
 
-            if action == "2":  # Remove
+            if action == "2":  
                 del selected_items[edit_choice]
                 print(YELLOW + f"🗑️ Removed {menu[edit_choice][0]} from your cart." + RESET)
 
-            elif action == "1":  # Update
+            elif action == "1":
                 while True:
                     new_qty = input(CYAN + f"Enter new quantity for {menu[edit_choice][0]}: " + RESET).strip()
                     if new_qty.isdigit() and int(new_qty) > 0:
@@ -130,7 +130,7 @@ while True:
         selected_items[choice] = selected_items.get(choice, 0) + quantity
         print(GREEN + BOLD + f"🛒 Added {quantity} x {menu[choice][0]} to your cart." + RESET)
 
-    # 🧾 Receipt
+    
     now = datetime.datetime.now()
     date_time = now.strftime("%Y-%m-%d %H:%M:%S")
     today = now.strftime("%Y%m%d")
@@ -158,7 +158,7 @@ while True:
     print(BG_WHITE + CYAN + BOLD + f"{'TOTAL':<15}{'':<10}{'':<10}${total:.2f}" + RESET)
     print(BG_WHITE + CYAN + "=================================================" + RESET)
 
-    # 💳 Payment
+    
     while True:
         try:
             payment = float(input(GREEN + BOLD +
