@@ -13,6 +13,35 @@ from __future__ import annotations
 import datetime
 from typing import Dict, List, Tuple
 
+RED = "\033[91m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+BLUE = "\033[94m"
+MAGENTA = "\033[95m"
+CYAN = "\033[96m"
+RESET = "\033[0m"  
+BOLD = "\033[1m"    
+
+BG_RED = "\033[41m"
+BG_GREEN = "\033[42m"
+BG_YELLOW = "\033[43m"
+BG_BLUE = "\033[44m"
+BG_MAGENTA = "\033[45m"
+BG_CYAN = "\033[46m"
+BG_WHITE = "\033[47m"
+
+
+def loading_animation(duration=1.5):
+    """Displays a simple loading animation with colors."""
+    print(CYAN + "Processing" + RESET, end="")
+    for _ in range(int(duration / 0.3)):
+        for dot in range(1, 4):
+            print(YELLOW + "." * dot + RESET, end="\r")
+            time.sleep(0.3)
+            print(" " * 15, end="\r")
+    print(GREEN + "Done!" + RESET)
+
+
 
 def _make_seats(rows: str = "ABCD", per_row: int = 10) -> List[str]:
     return [f"{row}{num}" for row in rows for num in range(1, per_row + 1)]
@@ -23,14 +52,14 @@ def _int_input(prompt: str, min_val: int | None = None, max_val: int | None = No
         try:
             val = int(input(prompt))
             if min_val is not None and val < min_val:
-                print(f"Please enter a number >= {min_val}.")
+                print(GREEN+ BOLD+ f"Please enter a number >= {min_val}.")
                 continue
             if max_val is not None and val > max_val:
-                print(f"Please enter a number <= {max_val}.")
+                print(GREEN+ BOLD+ f"Please enter a number <= {max_val}.")
                 continue
             return val
         except ValueError:
-            print("Invalid integer — please try again.")
+            print(RED+ BOLD+ "Invalid integer — please try again.")
 
 
 def _float_input(prompt: str, min_val: float | None = None) -> float:
@@ -38,11 +67,11 @@ def _float_input(prompt: str, min_val: float | None = None) -> float:
         try:
             val = float(input(prompt))
             if min_val is not None and val < min_val:
-                print(f"Please enter an amount >= {min_val}.")
+                print(GREEN + BOLD+ f"Please enter an amount >= {min_val}.")
                 continue
             return val
         except ValueError:
-            print("Invalid number — please try again.")
+            print(RED+ BOLD+ "Invalid number — please try again.")
 
 
 def _choice_input(prompt: str, options: List[str]) -> str:
@@ -51,7 +80,7 @@ def _choice_input(prompt: str, options: List[str]) -> str:
         val = input(prompt).strip().lower()
         if val in opts:
             return options[opts.index(val)]
-        print(f"Please choose one of: {', '.join(options)}")
+        print(GREEN+ BOLD+ f"Please choose one of: {', '.join(options)}")
 
 
 def pretty_receipt(
@@ -70,7 +99,7 @@ def pretty_receipt(
 ) -> str:
     lines = []
     lines.append("\n" + "=" * 40)
-    lines.append(" 🧾 MOVIE BOOKING RECEIPT")
+    lines.append(BG_WHITE+ " 🧾 MOVIE BOOKING RECEIPT")
     lines.append("=" * 40)
     lines.append(f"Booking Ref:   {booking_ref}")
     lines.append(f"Transaction #: {transaction}")
@@ -84,7 +113,7 @@ def pretty_receipt(
     lines.append(f"Seats:         {', '.join(seats)}")
     lines.append(f"Price:         ${unit_price:.2f} each (+${extra_cost} {seat_type})")
     lines.append(f"Total:         ${total:.2f}")
-    lines.append("=" * 40 + "\n")
+    lines.append("=" * 40 + "\n"+ RESET)
     return "\n".join(lines)
 
 
@@ -111,23 +140,26 @@ def movie_booking_system():
     recipient_counter = 1000
     transaction_counter = 1
 
-    print("🎬 Welcome to the Movie Theater Booking System!\n")
+    print(BG_GREEN+ CYAN+ BOLD+ "🎬 Welcome to the Movie Theater Booking System!\n")
+   
 
     try:
         while True:
-            print("Available Movies:")
+            print(BG_YELLOW+ "\n🎬 Available Movies\n") 
+            print(f"{'No.':<5}{'Title':<25}{'Showtime':<15}{'Price ($)':<10}")
+            print("-" * 60)
             for i, (title, details) in enumerate(movies.items(), start=1):
-                print(f"{i}. {title} - Showtime: {details['showtime']} - Price: ${details['price']}")
+                print(BG_YELLOW+ f"{i:<5}{title:<25}{details['showtime']:<15}{details['price']:<10}"+ RESET)
 
-            choice = _int_input("\nEnter the number of the movie you want to book: ", 1, len(movies))
+            choice = _int_input(GREEN+ BOLD+ "\nEnter the number of the movie you want to book: ", 1, len(movies))
             selected_movie = list(movies.keys())[choice - 1]
             ticket_price = float(movies[selected_movie]["price"])
 
             available = len(seat_map[selected_movie]["Regular"]) + len(seat_map[selected_movie]["VIP"])
-            print(f"Seats available for '{selected_movie}': {available} (Regular: {len(seat_map[selected_movie]['Regular'])}, VIP: {len(seat_map[selected_movie]['VIP'])})")
-            tickets = _int_input(f"🎟️ How many tickets for '{selected_movie}'? ", 1, available)
+            print(GREEN+ BOLD+ f"Seats available for '{selected_movie}': {available} (Regular: {len(seat_map[selected_movie]['Regular'])}, VIP: {len(seat_map[selected_movie]['VIP'])})")
+            tickets = _int_input(GREEN+ BOLD+ f"🎟️ How many tickets for '{selected_movie}'? ", 1, available)
 
-            seat_choice = _choice_input("Choose seat type (Regular/VIP): ", list(seat_types.keys()))
+            seat_choice = _choice_input(GREEN+ BOLD+ "Choose seat type (Regular/VIP): ", list(seat_types.keys()))
             extra_cost = seat_types[seat_choice]
 
             cost = tickets * (ticket_price + extra_cost)
@@ -141,7 +173,7 @@ def movie_booking_system():
             booking_ref = f"BK-{today_str}-{transaction_counter:03d}"
 
             if tickets > len(seat_map[selected_movie][seat_choice]):
-                print(f"⚠️ Not enough {seat_choice} seats available. Available: {len(seat_map[selected_movie][seat_choice])}")
+                print(RED+ BOLD+ f"⚠️ Not enough {seat_choice} seats available. Available: {len(seat_map[selected_movie][seat_choice])}")
                 continue
 
             assigned_raw = seat_map[selected_movie][seat_choice][:tickets]
@@ -177,35 +209,35 @@ def movie_booking_system():
             total_cost += cost
             transaction_counter += 1
 
-            another = _choice_input("Do you want to book another movie? (yes/no): ", ["yes", "no"])
+            another = _choice_input(GREEN+ BOLD+ "Do you want to book another movie? (yes/no): ", ["yes", "no"])
             if another.lower() == "no":
                 break
 
         print("\n📊 Booking Summary:")
-        print(f"{'Qty':<5}{'Film Title':<25}{'Price':<10}{'Recipient':<12}{'SeatType':<10}{'Booking Ref':<20}{'Date/Time':<25}{'Seats'}")
-        print("-" * 120)
+        print(BG_WHITE+ CYAN+ f"{'Qty':<5}{'Film Title':<25}{'Price':<10}{'Recipient':<12}{'SeatType':<10}{'Booking Ref':<20}{'Date/Time':<25}{'Seats'}")
+        print(BG_WHITE+ "-" * 120)
         for qty, movie, cost, recipient, time, seat_type, ref, seats in total_bookings:
             seats_str = ", ".join(seats)
             print(
                 f"{qty:<5}{movie:<25}${cost:<9.2f}{recipient:<12}{seat_type:<10}{ref:<20}{time:<25}{seats_str}"
             )
-        print("-" * 120)
-        print(f"\n💰 Grand Total: ${total_cost:.2f}")
+        print("-" * 120+ RESET)
+        print(GREEN + BOLD+ f"\n💰 Grand Total: ${total_cost:.2f}")
 
         while True:
-            payment = _float_input(f"💳 Please insert payment (Total: ${total_cost:.2f}): ", min_val=0.0)
+            payment = _float_input(GREEN+ BOLD+ f"💳 Please insert payment (Total: ${total_cost:.2f}): ", min_val=0.0)
             if payment < total_cost:
-                print(f"⚠️ Insufficient payment! You still owe ${total_cost - payment:.2f}.")
+                loading_animation(0.5)
+                print(RED + BOLD+ f"⚠️ Insufficient payment! You still owe ${total_cost - payment:.2f}.")
             else:
                 change = payment - total_cost
-                print(f"✅ Payment accepted! Your change is ${change:.2f}")
+                print(GREEN + BOLD+ f"✅ Payment accepted! Your change is ${change:.2f}")
                 break
 
-        print("🎉 Thank you for booking with us!")
+        print(BG_YELLOW+ CYAN+ BOLD+  "🎉 Thank you for booking with us!")
 
     except (KeyboardInterrupt, EOFError):
         print("\n\nExiting booking system. Goodbye.")
-
 
 if __name__ == "__main__":
     # Run the system
