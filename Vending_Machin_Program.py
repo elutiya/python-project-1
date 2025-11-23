@@ -182,4 +182,4 @@ while True:
     if again != "yes":
         print(BG_YELLOW + CYAN + BOLD +
               "👋 Thank you for using Arat Kilo Vending Machine! Goodbye!" + RESET)
-        break
+        
