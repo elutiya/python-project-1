@@ -62,7 +62,7 @@ while True:
 
         if choice == "done":
             if not selected_items:
-                loading_animation(0.5)
+               
                 print(RED + BOLD +
                       "⚠️ Your cart is empty. Please add at least one item before finishing.")
                 continue
