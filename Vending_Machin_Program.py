@@ -98,9 +98,9 @@ while True:
 
       
     loading_animation(0.3)
-    print(BG_WHITE+ YELLOW + BOLD + "\n🧾 ======================= Receipt =======================🧾")
-    print(BG_WHITE+ CYAN + f"{'ABCD PLC':<60}")
-    print(BG_WHITE+ CYAN + "Vending Machine 001  Location: Arat Killo Plaza")
+    print(BG_WHITE+ YELLOW + BOLD + "\n🧾 ======================= Receipt =======================🧾"+RESET)
+    print(BG_WHITE+ CYAN + f"{'ABCD PLC':<60}"+RESET)
+    print(BG_WHITE+ CYAN + "Vending Machine 001  Location: Arat Killo Plaza"+RESET)
     print(BG_WHITE+ CYAN + f"Date & Time: {date_time}")
     print(BG_WHITE+ CYAN + f"Transaction #: {transaction_number}")
     print(BG_WHITE+ CYAN + "-------------------------------------------------")

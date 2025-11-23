@@ -26,7 +26,7 @@ def loading_animation(duration=1.5):
             print("." * dot, end="\r")
             time.sleep(0.3)
             print(" " * 15, end="\r")  
-    print("Done!       ")
+    print("exit!       ")
 
 def get_valid_date(prompt):
     while True:
@@ -87,15 +87,18 @@ def print_menu():
     print(FOOTER_BG + " " * 40 + Style.RESET_ALL)
 # add new task
 def add_task(tasks):
-    print( " Type " + HEADER_BG+ "'done'" + END+ " when you are finished.\n" )
+    print( " Type " + HEADER_BG+ "'exit'" + END+ " when you are finished.\n" )
     
     while True:
         task_name = input(OPTION_BG + " Enter your task: " + END).strip().lower()
-        if task_name == "done":
+        if task_name == "exit":
             print(HEADER_BG + " ✅Finished adding tasks!" + END)
             break
         if task_name in tasks:
             print(RED + " Task already exists! Try another one.\n" + END)
+            continue
+        if task_name == "":
+            print(RED + " please enter your task name\n" + END)
             continue
         #priority choose
         while True:
@@ -133,6 +136,7 @@ def print_tasks(tasks):
         return
     # print(CYAN + "\n======= YOUR TASKS =======")
     print(OPTION_BG + f"{'No':>3} {'Task Name':<20}  {'Priority':^12}  {'Due Date':^14} {'Due Time':^10} ")
+    print(OPTION_BG+"-"* 66)
     for i, (name, value) in enumerate(tasks.items(), start=1):
             print(OPTION_BG + f" {i}. {name:<20}  {value['priority']:^12}  {value['due_date']:^14} {value['due_time']:^10} ") 
 def edit_task(tasks):
@@ -145,9 +149,9 @@ def edit_task(tasks):
     task_list = list(tasks.keys())
 
     while True:
-        choice = input("Enter task number to edit (or 'done'): ").lower()
+        choice = input("Enter task number to edit (or 'exit'): ").lower()
 
-        if choice == "done":
+        if choice == "exit":
             break
 
         if not choice.isdigit():
@@ -176,7 +180,7 @@ def edit_task(tasks):
         f"Enter due time "+CYAN+"(HH:MM) "+END+"or press Enter to skip: "
 
         # Edit priority
-        new_priority = input("Edit priority [{CYAN}low{END}, {CYAN}medium{END}, {CYAN}high{END}]:(Enter to skip): ").strip().lower()
+        new_priority = input(f"Edit priority [{CYAN}low{END}, {CYAN}medium{END}, {CYAN}high{END}]:(Enter to skip): ").strip().lower()
         if new_priority in ("low", "medium", "high"):
             task["priority"] = new_priority
 
@@ -200,12 +204,12 @@ def delete_task(tasks):
             print(RED+ "No tasks available.")
             return
     print_tasks(tasks)
-    print( "type " +GREEN+"'done'" +END+" when your done")
+    print( "type " +GREEN+"'exit'" +END+" when your done")
     task_list = list(tasks.keys())
     while True:
         
         delete_task = input("enter task number to delete: ").lower()
-        if delete_task == "done":
+        if delete_task == "exit":
               break
         if not delete_task.isdigit():
             print(RED + "Enter a valid number.")
@@ -220,7 +224,7 @@ def delete_task(tasks):
         del tasks[task_name]
         print(GREEN+ f"'{delete_task}' is deleted!")
         # else:
-        # print(RED+ f"'{delete_task}'  not found!") 
+        # print(RED+ f"'{delete_task}'  not found!")
         
 
 def mark_task_completed(tasks):
@@ -229,16 +233,25 @@ def mark_task_completed(tasks):
             print(RED+ "No tasks available.")
             return
     print_tasks(tasks)
-    print( "type " +GREEN+"'done'" +END+" when your done")
+    print( "type " +GREEN+"'exit'" +END+" when your done")
+    task_list = list(tasks.keys())
     while True:
-        mark_task = input("enter task name to mark complete: ").lower()
-        if mark_task == "done":
+        mark_task = (input("enter task number to mark complete: ")).lower()
+        if mark_task == "exit":
               break
-        if mark_task in tasks:
-            tasks[mark_task]["completed"] = True
-            print(GREEN+ f"'{mark_task}' marked as completed!")
-        else:
-            print("❌task not found!")
+        if not mark_task.isdigit():
+            print(RED + "Enter a valid number.")
+            continue
+        mark_task = int(mark_task)
+        if mark_task < 1 or mark_task > len(task_list):
+            print(RED + "Number out of range.")
+            continue
+        task_name = task_list[mark_task - 1]
+
+        tasks[task_name]["completed"] = True
+        print(GREEN + f"'{task_name}' marked as completed!")
+        # else:
+        #     print("❌task not found!")
 
 def show_summary(tasks):
     print(CYAN+"summary:")
