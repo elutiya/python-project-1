@@ -11,8 +11,8 @@
 import time
 import random
 import os
-import signal
-import threading
+import sys
+
 from colorama import Fore, Style, init
 init(autoreset=True)
 
@@ -64,50 +64,8 @@ def reset_asked():
     return set()
 
 
-def timed_input(prompt, timeout, header_countdown=False, header_move_up=0, header_q_no=None, header_total_q=None, header_box_width=None):
-
-    stop_event = threading.Event()
-
-    def _handler(signum, frame):
-        raise TimeoutError
-
-    def header_countdown_func(seconds, move_up, event, q_no, total_q, box_width):
-        for remaining in range(seconds, 0, -1):
-            if event.is_set():
-                break
-            print(f"\033[{move_up}A", end="")
-            text = f" Question {q_no}/{total_q}   Time left: {remaining:2d}s "
-            header_line = HEADER_BG + f" {text.ljust(box_width)} " + END
-            print(header_line)
-            print(f"\033[{move_up}B", end="", flush=True)
-            time.sleep(1)
-        print(f"\033[{move_up}A", end="")
-        text = f" Question {q_no}/{total_q}   Time left:   0s "
-        header_line = HEADER_BG + f" {text.ljust(box_width)} " + END
-        print(header_line)
-        print(f"\033[{move_up}B", end="", flush=True)
-
-    old_handler = signal.signal(signal.SIGALRM, _handler)
-    signal.alarm(timeout)
-
-    t = None
-    if header_countdown:
-        q_no = header_q_no or 0
-        total_q = header_total_q or 0
-        box_w = header_box_width or 50
-        t = threading.Thread(target=header_countdown_func, args=(timeout, header_move_up, stop_event, q_no, total_q, box_w), daemon=True)
-        t.start()
-
-    try:
-        user = input(prompt)
-        stop_event.set()
-        return user
-    except TimeoutError:
-        stop_event.set()
-        return None
-    finally:
-        signal.alarm(0)
-        signal.signal(signal.SIGALRM, old_handler)
+def timed_input(prompt):
+    return input(prompt)
 
 
 def clear_screen():
@@ -135,7 +93,7 @@ def loading_animation(duration=1.2):
     print(" " * 20, end="\r")
 
 
-def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=10):
+def ask_question(q_dict, q_no=1, total_q=1):
     clear_screen()
     original_choices = q_dict.get("choices") or []
     display_choices = list(original_choices)
@@ -154,79 +112,47 @@ def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=
             choice_str = f"{idx}. {choice}"
             print(CHOICE_BG + f" {choice_str.ljust(box_width)} " + END)
 
-    print(YELLOW + f"You have {time_limit} seconds to answer. Type 'hint' to request a hint (costs 2 points)." + END)
+    print(YELLOW + "Type your answer. Type 'hint' to request a hint (costs 2 points)." + END)
 
     hint_used = False
 
-    choices_count = len(display_choices)
-    move_up = choices_count + 4
-
-    print(YELLOW + "Your answer:" + END)
-    user_answer = timed_input("", time_limit)
+    user_answer = timed_input(YELLOW + "Your answer: " + END)
+    
     answered = False
 
-    if user_answer is not None and user_answer.strip().lower() == "hint":
+    # If the player asked for a hint
+    if user_answer.strip().lower() == "hint":
         if "hint" in q_dict:
             print(GREEN + f"Hint: {q_dict['hint']}" + END)
             hint_used = True
             loading_animation(0.6)
-            print(YELLOW + f"You have {extra_time_with_hint} seconds to answer:" + END)
-            user_answer = timed_input("", extra_time_with_hint)
-            if user_answer is None:
+            print(YELLOW + "Type your answer:" + END)
+            user_answer = timed_input("")
+            if not user_answer.strip():
                 print(RED + "No answer provided after hint." + END)
                 return False, False, hint_used
             answered = True
         else:
             print(RED + "No hint available for this question." + END)
-            user_answer = timed_input("", time_limit)
-            if user_answer is None:
-                print(RED + "Time's up!" + END)
-                if "hint" in q_dict:
-                    want_hint = input("Would you like a hint? (yes/no): ").strip().lower()
-                    if want_hint == "yes":
-                        print(GREEN + f"Hint: {q_dict['hint']}" + END)
-                        hint_used = True
-                        print(YELLOW + f"You have {extra_time_with_hint} seconds to answer:" + END)
-                        user_answer = timed_input("", extra_time_with_hint)
-                        if user_answer is None:
-                            print(RED + "No answer provided after hint." + END)
-                            return False, False, hint_used
-                        answered = True
-                    else:
-                        return False, False, hint_used
-                else:
-                    return False, False, hint_used
-            else:
-                answered = True
-
-    elif user_answer is None:
-        print(RED + "Time's up!" + END)
-        if "hint" in q_dict:
-            want_hint = input("Would you like a hint? (yes/no): ").strip().lower()
-            if want_hint == "yes":
-                print(GREEN + f"Hint: {q_dict['hint']}" + END)
-                hint_used = True
-                user_answer = timed_input(f"You have {extra_time_with_hint} seconds to answer: ", extra_time_with_hint)
-                if user_answer is None:
-                    print(RED + "No answer provided after hint." + END)
-                    return False, False, hint_used
-                answered = True
-            else:
+            user_answer = timed_input("")
+            if not user_answer.strip():
+                print(RED + "No answer provided." + END)
                 return False, False, hint_used
-        else:
-            return False, False, hint_used
+            answered = True
+
     else:
+        if not user_answer.strip():
+            print(RED + "No answer provided." + END)
+            return False, False, hint_used
         answered = True
 
-    if display_choices and user_answer is not None:
+    if display_choices:
         if user_answer.strip().isdigit():
             idx = int(user_answer.strip()) - 1
             if 0 <= idx < len(display_choices):
                 user_answer = display_choices[idx]
 
     correct_answer = q_dict["answer"].strip().lower()
-    if user_answer is None:
-        return False, False, hint_used
     if user_answer.strip().lower() == correct_answer:
         print(GREEN + "Correct!" + END)
         return True, True, hint_used
@@ -275,7 +201,7 @@ def run_quiz(questions, asked_indices, per_round=5):
     print("Welcome to the Quiz!\n")
     for pos, i in enumerate(indices, start=1):
         q_dict = questions[i]
-        correct, answered, hint_used = ask_question(q_dict, q_no=pos, total_q=len(indices), time_limit=15)
+        correct, answered, hint_used = ask_question(q_dict, q_no=pos, total_q=len(indices))
         if correct:
             points = 3 if hint_used else 5
             score += points
@@ -315,4 +241,8 @@ def main():
             print("Thanks for playing!")
             break
 
-main()
+try:
+    main()
+except (KeyboardInterrupt, EOFError):
+    print("\n\nExiting quiz. Goodbye.")
+    sys.exit(0)
