@@ -11,6 +11,7 @@ This variant keeps bookings in memory only (no disk persistence). It:
 from __future__ import annotations
 
 import datetime
+import time
 from typing import Dict, List, Tuple
 
 RED = "\033[91m"
