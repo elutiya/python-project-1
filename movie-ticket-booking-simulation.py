@@ -143,11 +143,11 @@ def movie_booking_system():
     recipient_counter = 1000
     transaction_counter = 1
     print('\n')
-    print(HEADER_BG + CYAN + f"{'🎬 Welcome to the Movie Theater Booking System!':^54}" + END)
+    print(HEADER_BG + f"{'🎬 Welcome to the Movie Theater Booking System!':^54}" + END)
 
     try:
         while True:
-            print(BG_WHITE + CYAN + f"{'🎬 Available Movies':^54}" + END)
+            print(BG_WHITE + f"{'🎬 Available Movies':^54}" + END)
             print(OPTION_BG + f"{'No.':<5}{'Title':<25}{'Showtime':<15}{'Price ($)':<10}" + END)
             print(OPTION_BG + "-" * 55 + END)
             for i, (title, details) in enumerate(movies.items(), start=1):
