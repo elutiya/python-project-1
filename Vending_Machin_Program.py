@@ -1,11 +1,10 @@
+from colorama import Fore, Style, init
+init(autoreset=True)
 import datetime
 import random
 import time
 
-<<<<<<< HEAD
-=======
 
->>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
 RED = "\033[91m"
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
@@ -21,7 +20,7 @@ BG_YELLOW = "\033[43m"
 BG_BLUE = "\033[44m"
 BG_MAGENTA = "\033[45m"
 BG_CYAN = "\033[46m"
-BG_WHITE = "\033[47m"
+BG_WHITE = "\033[48;2;255;255;255m"
 
 
 def loading_animation(duration=1.5):
@@ -35,10 +34,7 @@ def loading_animation(duration=1.5):
     print(GREEN + "Done!" + RESET)
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
 menu = {
     1: ["🍟 Chips", 10],
     2: ["🥤 Soda", 25],
@@ -50,24 +46,21 @@ menu = {
     8: ["🍬 Gum", 1]
 }
 
-<<<<<<< HEAD
-=======
 transaction_counter = 1  
->>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
 
-while True:  
-    selected_items = {} 
+# while True:  
+selected_items = {} 
 
-    print(GREEN + BOLD + "✨=== Welcome to the Arat Kilo Vending Machine ===✨" + RESET)
-    print(BG_BLUE + " " * 33)
-    print(BG_BLUE + BOLD + f"📋 {'Menu':<17}   {' price':10}" + RESET)
-    print(BG_BLUE + " " * 33)
+print(GREEN + BOLD + "✨=== Welcome to the Arat Kilo Vending Machine ===✨" + RESET)
+print(BG_BLUE + " " * 34)
+print(BG_BLUE + BOLD + f" 📋 {'Menu':<17}   {' price':10}" + RESET)
+print(BG_BLUE + " " * 34)
 
-    for number, (item, price) in menu.items():
-        print(BG_YELLOW + BOLD + f"{number}. {item:<17}" " - " f"${price:<8.2f}"+ RESET )
+for number, (item, price) in menu.items():
+    print(BG_YELLOW + BOLD + f" {number}. {item:<17}" " - " f"${price:<8.2f}"+ RESET )
 
 
-    while True:
+while True:
         choice = input(GREEN + BOLD +
                        "\nEnter item number (or 'edit' to modify cart, 'done' to finish): "
                        + RESET).strip().lower()
@@ -81,9 +74,7 @@ while True:
             break
 
         if choice == "edit":
-<<<<<<< HEAD
          
-=======
             if not selected_items:
                 print(RED + BOLD + "⚠️ Your cart is empty. Nothing to edit." + RESET)
                 continue
@@ -126,7 +117,6 @@ while True:
                         print(RED + "❌ Invalid quantity. Please enter a positive number." + RESET)
             else:
                 print(RED + "❌ Invalid choice. Please enter 1 or 2." + RESET)
->>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
             continue
 
         if not choice.isdigit() or int(choice) not in menu:
@@ -146,65 +136,60 @@ while True:
         selected_items[choice] = selected_items.get(choice, 0) + quantity
         print(GREEN + BOLD + f"🛒Added {quantity} x {menu[choice][0]} to your cart.")
 
-<<<<<<< HEAD
-=======
     
->>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
-    now = datetime.datetime.now()
-    date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+now = datetime.datetime.now()
+date_time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-    transaction_counter = 1
-    today = now.strftime("%Y%m%d")
-    transaction_number = f"TR-{today}-{transaction_counter:03d}"
+transaction_counter = 1
+today = now.strftime("%Y%m%d")
+transaction_number = f"TR-{today}-{transaction_counter:03d}"
 
-      
-    loading_animation(0.3)
-    print(BG_WHITE+ YELLOW + BOLD + "\n🧾 ======================= Receipt =======================🧾")
-    print(BG_WHITE+ CYAN + f"{'ABCD PLC':<60}")
-    print(BG_WHITE+ CYAN + "Vending Machine 001  Location: Arat Killo Plaza")
-    print(BG_WHITE+ CYAN + f"Date & Time: {date_time}")
-    print(BG_WHITE+ CYAN + f"Transaction #: {transaction_number}")
-    print(BG_WHITE+ CYAN + "-------------------------------------------------")
-    print(BG_WHITE+ CYAN + BOLD + f"{'Item':<15}{'Qty':<10}{'Price':<10}{'Line Total'}")
-    print(BG_WHITE+ CYAN + "-------------------------------------------------" + RESET)
+    
+#reciept_print
+loading_animation(0.5)
+#clear_screen() #clear previous screen
+print(BG_WHITE+ f"{'=' * 50}")
+print(BG_WHITE+f"{'GROCERY RECEIPT':^50}")
+print(BG_WHITE+ f"{'=' * 50}")
 
-    total = 0
-    for number, quantity in selected_items.items():
-     item, price = menu[number]
-     line_total = price * quantity
-    print(BG_WHITE + CYAN + f"{item:<15}{quantity:<10}${price:<9.2f}${line_total:.2f}" + RESET)
+print(BG_WHITE+ f" {'Store:    ABCD PLC':<49}")
+print(BG_WHITE+ f" {'Location: Arat Killo Plaza':<49}")
+print(BG_WHITE+ f" {'Machine:  VM-001':<49}")
+print(BG_WHITE+"-" * 50)
+
+print(BG_WHITE+f" Transaction #: {transaction_number:<34}")
+print(BG_WHITE+f" Date & Time:   {date_time:<34}")
+print(BG_WHITE+"-" * 50)
+
+print(BG_WHITE+CYAN+ f" {'Item':<15}{'quantity':^15}{'price':<10}{'Subtotal':^9}")
+print(BG_WHITE+"-" * 50)
+total = 0
+for number, quantity in selected_items.items():
+    item, price = menu[number]
+    line_total = price * quantity
+    print(BG_WHITE + f"{item:<15}{quantity:^15}${price:<9.2f}${line_total:<8.2f}" + RESET)
     total += line_total
+print(BG_WHITE+"-" * 50)
+print(BG_WHITE+f" Total: {'$':>34}{total :<7.2f} ")
+print(BG_WHITE+"=" * 50)
 
-    print(BG_WHITE+ CYAN+ "-------------------------------------------------" + RESET)
-    print(BG_WHITE+ CYAN + BOLD + f"{'TOTAL':<15}{'':<10}{'':<10}${total:.2f}" + RESET)
-    print(BG_WHITE+ CYAN+ "=================================================" + RESET)
-
-<<<<<<< HEAD
-=======
     
->>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
-    while True:
-        try:
-            payment = float(input(GREEN + BOLD +
-                                  f"Please insert payment (Total:${total:.2f}): " + RESET))
-            if payment < total:
-                print(RED + f"⚠️Insufficient payment! You still owe ${total - payment:.2f}." + RESET)
-            else:
-                loading_animation(0.5)
-                change = payment - total
-                print(GREEN + BOLD +
-                      f"✅Payment accepted! Your change is ${change:.2f}" + RESET)
-                break
-        except ValueError:
-            print(RED + "❌Invalid input! Please enter a valid amount." + RESET)
+while True:
+    try:
+        payment = float(input(GREEN + BOLD +
+                                f"Please insert payment (Total:${total:.2f}): " + RESET))
+        if payment < total:
+            print(RED + f"⚠️Insufficient payment! You still owe ${total - payment:.2f}." + RESET)
+        else:
+            loading_animation(0.5)
+            change = payment - total
+            print(GREEN + BOLD +
+                    f"✅Payment accepted! Your change is ${change:.2f}" + RESET)
+            break
+    except ValueError:
+        print(RED + "❌Invalid input! Please enter a valid amount." + RESET)
 
 
-    print(BG_YELLOW + BOLD +
-          "🎉🎉Thank you for shopping at Arat Kilo Vending Machine!🎉🎉" + RESET)
+print(BG_YELLOW + BOLD +
+        "🎉🎉Thank you for shopping at Arat Kilo Vending Machine!🎉🎉" + RESET)
 
-    again = input(GREEN + "\nWould you like to make another purchase? (yes/no): " +
-                  RESET).strip().lower()
-    if again != "yes":
-        print(BG_YELLOW + CYAN + BOLD +
-              "👋 Thank you for using Arat Kilo Vending Machine! Goodbye!" + RESET)
-        break

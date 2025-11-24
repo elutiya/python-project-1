@@ -12,6 +12,17 @@ import os
 import time
 import datetime
 import random
+# Colors
+CYAN = Fore.CYAN + Style.BRIGHT 
+CYAN_GREEN = "\033[38;2;169;212;170m" + Style.BRIGHT
+Black = Fore.BLACK + Style.BRIGHT 
+YELLOW = Fore.YELLOW + Style.NORMAL
+RED = Fore.RED + Style.BRIGHT
+GREEN = Fore.GREEN + Style.BRIGHT
+END = Style.RESET_ALL 
+HEADER_BG = "\033[48;2;139;195;74m" + Fore.WHITE + Style.BRIGHT
+OPTION_BG = "\033[48;2;169;212;170m"+ Fore.BLACK + Style.BRIGHT
+WHITE_BG = "\033[48;2;255;255;255m"
 #clear screen
 def clear_screen():
     os.system('cls')
@@ -27,17 +38,7 @@ def loading_animation(duration=1.5):
             print(" " * 15, end="\r")  # clear line
     print("Done!       ")
 
-# Colors
-CYAN = Fore.CYAN + Style.BRIGHT 
-CYAN_GREEN = "\033[38;2;169;212;170m" + Style.BRIGHT
-Black = Fore.BLACK + Style.BRIGHT 
-YELLOW = Fore.YELLOW + Style.NORMAL
-RED = Fore.RED + Style.BRIGHT
-GREEN = Fore.GREEN + Style.BRIGHT
-END = Style.RESET_ALL 
-HEADER_BG = "\033[48;2;139;195;74m" + Fore.WHITE + Style.BRIGHT
-OPTION_BG = "\033[48;2;169;212;170m"+ Fore.BLACK + Style.BRIGHT
-WHITE_BG = "\033[48;2;255;255;255m"
+
 
 total = 0
 #groceries_list
@@ -119,3 +120,20 @@ print(WHITE_BG+f" Total: {'$':>34}{total :<7.2f} ")
 print(WHITE_BG+"-" * 50)
 print(WHITE_BG+f"{'Thank you for shopping!':^50}")
 print(WHITE_BG+"-" * 50)
+while True:
+    try:
+        payment = float(input( f"{CYAN_GREEN}Please insert payment {GREEN}(Total:${total:.2f}):{END} "  ))
+        if payment < total:
+            print(RED + f"⚠️Insufficient payment! You still owe ${total - payment:.2f}." + END)
+        else:
+            loading_animation(0.5)
+            change = payment - total
+            print(
+                    f"✅Payment accepted! Your change is" +GREEN +"${change:.2f}" + END)
+            break
+    except ValueError:
+        print(RED + "❌Invalid input! Please enter a valid amount." + END)
+
+clear_screen()
+print(CYAN_GREEN +
+        "Thank you for shopping at Arat Kilo Vending Machine!" + END)
