@@ -65,12 +65,7 @@ def reset_asked():
 
 
 def timed_input(prompt, timeout, header_countdown=False, header_move_up=0, header_q_no=None, header_total_q=None, header_box_width=None):
-    """
-    Wait for user input with a timeout.
-    If header_countdown is True, update the header line (move up header_move_up lines) with the remaining time
-    so the countdown appears next to the question counter instead of the input area.
-    Returns the entered string, or None if timed out.
-    """
+
     stop_event = threading.Event()
 
     def _handler(signum, frame):
@@ -80,16 +75,12 @@ def timed_input(prompt, timeout, header_countdown=False, header_move_up=0, heade
         for remaining in range(seconds, 0, -1):
             if event.is_set():
                 break
-            # move cursor up to header, rewrite it, then move back down
             print(f"\033[{move_up}A", end="")
             text = f" Question {q_no}/{total_q}   Time left: {remaining:2d}s "
             header_line = HEADER_BG + f" {text.ljust(box_width)} " + END
-            # overwrite the header line
             print(header_line)
-            # move cursor back down
             print(f"\033[{move_up}B", end="", flush=True)
             time.sleep(1)
-        # clear timer when done
         print(f"\033[{move_up}A", end="")
         text = f" Question {q_no}/{total_q}   Time left:   0s "
         header_line = HEADER_BG + f" {text.ljust(box_width)} " + END
@@ -99,7 +90,6 @@ def timed_input(prompt, timeout, header_countdown=False, header_move_up=0, heade
     old_handler = signal.signal(signal.SIGALRM, _handler)
     signal.alarm(timeout)
 
-    # start header countdown thread if requested
     t = None
     if header_countdown:
         q_no = header_q_no or 0
@@ -124,7 +114,6 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-# Colors (styling inspired by todo_list_app)
 CYAN = Fore.CYAN + Style.BRIGHT
 YELLOW = Fore.YELLOW + Style.BRIGHT
 RED = Fore.RED + Style.BRIGHT
@@ -147,10 +136,7 @@ def loading_animation(duration=1.2):
 
 
 def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=10):
-    """Ask a single question. Returns tuple (correct:bool, answered:bool, hint_used:bool)."""
     clear_screen()
-    # Build a fixed-width box for header, question and choices so they align
-    # Randomize display order of choices if present
     original_choices = q_dict.get("choices") or []
     display_choices = list(original_choices)
     if display_choices:
@@ -161,9 +147,7 @@ def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=
     content_width = max(len(question_text), max((len(s) for s in choices_list), default=0), len(header_text))
     box_width = max(content_width, 40)
 
-    # Print header using fixed box width
     print(HEADER_BG + f" {header_text.ljust(box_width)} " + END)
-    # Print question with background, padded to box width
     print(QUESTION_BG + f" {question_text.ljust(box_width)} " + END)
     if display_choices:
         for idx, choice in enumerate(display_choices, 1):
@@ -174,18 +158,13 @@ def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=
 
     hint_used = False
 
-    # compute how many lines down the input prompt will be from the header so the countdown can update the header
     choices_count = len(display_choices)
-    # lines between header and input cursor: question(1) + choices_count + info line(1) + blank(1) + answer prompt(1) = choices_count + 4
     move_up = choices_count + 4
 
-    # first attempt (or proactive hint)
-    # Show the input prompt on its own line so the user's input appears below the question
     print(YELLOW + "Your answer:" + END)
     user_answer = timed_input("", time_limit)
     answered = False
 
-    # If user proactively requested a hint
     if user_answer is not None and user_answer.strip().lower() == "hint":
         if "hint" in q_dict:
             print(GREEN + f"Hint: {q_dict['hint']}" + END)
@@ -199,11 +178,9 @@ def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=
             answered = True
         else:
             print(RED + "No hint available for this question." + END)
-            # allow a normal retry with remaining time
             user_answer = timed_input("", time_limit)
             if user_answer is None:
                 print(RED + "Time's up!" + END)
-                # ask if they want a hint if available
                 if "hint" in q_dict:
                     want_hint = input("Would you like a hint? (yes/no): ").strip().lower()
                     if want_hint == "yes":
@@ -222,7 +199,6 @@ def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=
             else:
                 answered = True
 
-    # If initial timed_input returned None (timeout)
     elif user_answer is None:
         print(RED + "Time's up!" + END)
         if "hint" in q_dict:
@@ -242,7 +218,6 @@ def ask_question(q_dict, q_no=1, total_q=1, time_limit=15, extra_time_with_hint=
     else:
         answered = True
 
-    # convert numeric choice to actual answer (map against the displayed, possibly shuffled, choices)
     if display_choices and user_answer is not None:
         if user_answer.strip().isdigit():
             idx = int(user_answer.strip()) - 1
