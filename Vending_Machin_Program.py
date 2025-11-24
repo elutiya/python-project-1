@@ -2,6 +2,10 @@ import datetime
 import random
 import time
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
 RED = "\033[91m"
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
@@ -31,6 +35,10 @@ def loading_animation(duration=1.5):
     print(GREEN + "Done!" + RESET)
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
 menu = {
     1: ["🍟 Chips", 10],
     2: ["🥤 Soda", 25],
@@ -42,6 +50,10 @@ menu = {
     8: ["🍬 Gum", 1]
 }
 
+<<<<<<< HEAD
+=======
+transaction_counter = 1  
+>>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
 
 while True:  
     selected_items = {} 
@@ -69,7 +81,52 @@ while True:
             break
 
         if choice == "edit":
+<<<<<<< HEAD
          
+=======
+            if not selected_items:
+                print(RED + BOLD + "⚠️ Your cart is empty. Nothing to edit." + RESET)
+                continue
+
+            print(YELLOW + BOLD + "\n🛒 Current Cart:" + RESET)
+            for num, qty in selected_items.items():
+                item, price = menu[num]
+                print(f"{num}. {item} - Qty: {qty}")
+
+            edit_choice = input(CYAN + BOLD +
+                                "Enter item number to update/remove (or 'back' to return): " +
+                                RESET).strip().lower()
+
+            if edit_choice == "back":
+                continue
+
+            if not edit_choice.isdigit() or int(edit_choice) not in selected_items:
+                print(RED + BOLD + "❌Invalid choice! Please select an item in your cart." + RESET)
+                continue
+
+            edit_choice = int(edit_choice)
+            print(CYAN + "What would you like to do?" + RESET)
+            print("1. Update quantity")
+            print("2. Remove item")
+
+            action = input("Enter 1 or 2: ").strip()
+
+            if action == "2":  
+                del selected_items[edit_choice]
+                print(YELLOW + f"🗑️ Removed {menu[edit_choice][0]} from your cart." + RESET)
+
+            elif action == "1":
+                while True:
+                    new_qty = input(CYAN + f"Enter new quantity for {menu[edit_choice][0]}: " + RESET).strip()
+                    if new_qty.isdigit() and int(new_qty) > 0:
+                        selected_items[edit_choice] = int(new_qty)
+                        print(GREEN + f"✅ Updated {menu[edit_choice][0]} to {new_qty}." + RESET)
+                        break
+                    else:
+                        print(RED + "❌ Invalid quantity. Please enter a positive number." + RESET)
+            else:
+                print(RED + "❌ Invalid choice. Please enter 1 or 2." + RESET)
+>>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
             continue
 
         if not choice.isdigit() or int(choice) not in menu:
@@ -89,6 +146,10 @@ while True:
         selected_items[choice] = selected_items.get(choice, 0) + quantity
         print(GREEN + BOLD + f"🛒Added {quantity} x {menu[choice][0]} to your cart.")
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
     now = datetime.datetime.now()
     date_time = now.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -118,6 +179,10 @@ while True:
     print(BG_WHITE+ CYAN + BOLD + f"{'TOTAL':<15}{'':<10}{'':<10}${total:.2f}" + RESET)
     print(BG_WHITE+ CYAN+ "=================================================" + RESET)
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> e196a570ab5a96ad4e966b6e61647ccd950bf334
     while True:
         try:
             payment = float(input(GREEN + BOLD +
