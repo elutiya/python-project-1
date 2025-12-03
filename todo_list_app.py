@@ -15,7 +15,7 @@ import time
 
 #clear screen
 def clear_screen():
-    os.system('cls')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 #loding_animation
 def loading_animation(duration=1.5):
