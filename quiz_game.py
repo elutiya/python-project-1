@@ -115,8 +115,13 @@ def ask_question(q_dict, q_no=1, total_q=1):
     print(YELLOW + "Type your answer. Type 'hint' to request a hint (costs 2 points)." + END)
 
     hint_used = False
-
-    user_answer = timed_input(YELLOW + "Your answer: " + END)
+    while True:
+      user_answer = timed_input(YELLOW + "Your answer: " + END)
+      if user_answer == "" :
+                print("please enter the answer")
+                continue
+      else:
+          break
     
     answered = False
 
@@ -147,10 +152,22 @@ def ask_question(q_dict, q_no=1, total_q=1):
         answered = True
 
     if display_choices:
-        if user_answer.strip().isdigit():
-            idx = int(user_answer.strip()) - 1
-            if 0 <= idx < len(display_choices):
-                user_answer = display_choices[idx]
+        while True:
+            if user_answer.strip().isdigit():
+                idx = int(user_answer) - 1
+                if 0 <= idx < len(display_choices):
+                    user_answer = display_choices[idx]
+                    break
+                else:
+                    print(RED + f"Please enter a number between 1 and {len(display_choices)}." + END)
+            
+            else:
+                print(RED + "Invalid input. Please enter the number of your choice." + END)
+            
+            user_answer = timed_input(YELLOW + "Your answer: " + END)
+
+
+
 
     correct_answer = q_dict["answer"].strip().lower()
     if user_answer.strip().lower() == correct_answer:
